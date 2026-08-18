@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日本中部賞楓自駕之旅</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            /* 底層全螢幕楓葉背景，使用穩定顯示的連結，85% 白色遮罩 */
+            background: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), 
+                        url('https://images.unsplash.com/photo-1542317833-28987ec8b871?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80') center/cover fixed;
+            color: #111;
+            font-size: 18px;
+        }
+        
+        /* 頂部 Hero 區塊：換回保證能顯示的名古屋圖片，並加上秋季暖橘紅色漸層遮罩營造楓葉氛圍 */
+        .hero {
+            background: linear-gradient(rgba(180, 50, 0, 0.4), rgba(0, 0, 0, 0.6)), 
+                        url('https://images.unsplash.com/photo-1596422846543-75c6fc197f07?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+            height: 35vh;
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .hero h1 {
+            margin: 0;
+            font-size: 2.4em;
+            text-shadow: 2px 3px 6px rgba(0,0,0,0.9);
+            letter-spacing: 2px;
+            font-weight: 900;
+        }
+        .hero p {
+            font-size: 1.25em;
+            margin-top: 10px;
+            text-shadow: 1px 2px 5px rgba(0,0,0,0.9);
+            color: #fff8e1;
+            font-weight: bold;
+        }
+        
+        /* 主要內容底板：溫暖的秋季奶茶色漸層 */
+        .container {
+            max-width: 800px;
+            margin: -40px auto 40px;
+            background: linear-gradient(135deg, rgba(255, 248, 235, 0.95) 0%, rgba(253, 239, 222, 0.95) 100%);
+            padding: 30px 25px;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border: 1px solid rgba(230, 126, 34, 0.2);
+            position: relative;
+            z-index: 10;
+        }
+
+        /* 資訊區塊 */
+        .info-box, .emergency-box {
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            line-height: 1.6;
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+        .info-box {
+            color: #004ba0;
+            border-left: 6px solid #1976d2;
+            box-shadow: 0 2px 8px rgba(25, 118, 210, 0.05);
+        }
+        .emergency-box {
+            color: #e65100;
+            border-left: 6px solid #f57c00;
+            box-shadow: 0 2px 8px rgba(245, 124, 0, 0.05);
+        }
+
+        /* 每一天的時間軸 */
+        .day-block {
+            margin-bottom: 45px;
+            border-left: 5px solid #d84315;
+            padding-left: 25px;
+            position: relative;
+        }
+        .day-block::before {
+            content: '';
+            position: absolute;
+            left: -15px;
+            top: 5px;
+            width: 25px;
+            height: 25px;
+            background: #d84315;
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px rgba(216, 67, 21, 0.2);
+        }
+        .day-title {
+            font-size: 1.5em;
+            color: #bf360c;
+            margin-top: -5px;
+            margin-bottom: 15px;
+            font-weight: 800;
+            text-shadow: 1px 1px 1px rgba(255,255,255,0.8);
+        }
+
+        ul {
+            line-height: 1.8;
+            padding-left: 20px;
+            font-size: 1.15em;
+            color: #2c1e16;
+            margin: 0;
+        }
+        li {
+            margin-bottom: 20px;
+        }
+
+        /* 美食專屬區塊 */
+        .meal-box {
+            background-color: rgba(253, 242, 233, 0.8);
+            border-radius: 8px;
+            padding: 12px 15px;
+            margin-top: 8px;
+            border: 1px dashed #e67e22;
+            color: #b95c00;
+        }
+        
+        /* GPS 電話提示文字 */
+        .gps-text {
+            display: block;
+            font-size: 0.85em;
+            color: #555;
+            margin-top: 5px;
+            font-family: monospace;
+            background: rgba(255,255,255,0.6);
+            padding: 4px 8px;
+            border-radius: 4px;
+            width: fit-content;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        /* 按鈕樣式 */
+        .btn-container {
+            margin-top: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .nav-link {
+            display: inline-flex;
+            align-items: center;
+            background-color: #f1f8e9;
+            color: #33691e;
+            padding: 10px 18px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 0.95em;
+            font-weight: bold;
+            border: 2px solid #c5e1a5;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .nav-link:hover {
+            background-color: #7cb342;
+            color: white;
+            border-color: #7cb342;
+        }
+        .nav-link::before {
+            content: '📍';
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+        .hotel-link {
+            background-color: #fff3e0;
+            color: #e65100;
+            border-color: #ffcc80;
+        }
+        .hotel-link:hover {
+            background-color: #f57c00;
+            color: white;
+            border-color: #f57c00;
+        }
+        .hotel-link::before {
+            content: '🏨';
+        }
+        .transport-link {
+            background-color: #e1f5fe;
+            color: #0277bd;
+            border-color: #81d4fa;
+        }
+        .transport-link::before {
+            content: '🚗';
+        }
+
+        @media (max-width: 600px) {
+            body { font-size: 16px; }
+            .hero h1 { font-size: 2.1em; }
+            .container {
+                margin: -25px 10px 30px;
+                border-radius: 12px;
+                padding: 20px 15px;
+            }
+            .day-block { padding-left: 20px; }
+            .nav-link {
+                padding: 12px 16px;
+                width: 100%;
+                box-sizing: border-box;
+                justify-content: center;
+            }
+            .gps-text { font-size: 0.95em; width: 100%; box-sizing: border-box; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hero">
+        <h1>🍁 日本中部賞楓自駕遊</h1>
+        <p>11月18日 - 11月22日 | 8人 2車</p>
+    </div>
+
+    <div class="container">
+        
+        <div class="info-box">
+            <strong>✈️ 航班資訊：</strong><br>
+            <strong>【去程】11/18 (一)</strong> UO680 (10:00 香港 ➔ 14:30 名古屋)<br>
+            <strong>【回程】11/22 (五)</strong> MU720 (17:00 起飛) | UO685 (20:40 起飛)
+        </div>
+
+        <div class="emergency-box">
+            <strong>💡 自駕與實用提示：</strong><br>
+            1. <strong>日落時間：</strong> 11月下旬大約 <strong>16:45</strong> 就會天黑，山路駕駛請提早準備。<br>
+            2. <strong>導航秘訣：</strong> 已附上各景點電話，直接輸入車載 GPS 最為精準。<br>
+            3. Toyota 租車機場店電話：<code>0569-38-0100</code>
+        </div>
+
+        <!-- Day 1 -->
+        <div class="day-block">
+            <div class="day-title">Day 1 (18/11)：抵達名古屋，直奔高山</div>
+            <ul>
+                <li><strong>抵達與租車：</strong> 抵達機場提取租車（預計 16:00 出發）。
+                    <div class="btn-container">
+                        <a class="nav-link transport-link" href="https://www.google.com/maps/search/?api=1&query=Toyota+Rent+a+Car+Chubu+International+Airport" target="_blank">Toyota 租車機場店</a>
+                    </div>
+                </li>
+                <li><strong>前往高山：</strong> 驅車前往高山（車程約 2.5-3 小時）。預計晚上 19:00 前後抵達。</li>
+                <li><strong>晚餐：</strong> 
+                    <div class="meal-box">
+                        🍽️ <strong>當地美食推薦：高山拉麵</strong><br>
+                        重頭戲飛驒牛留到下呂吃！今晚推薦品嚐特色的「高山拉麵」（清爽的醬油湯底，如：桔梗屋 或 麵屋白川），非常適合長途跋涉後的暖胃。
+                    </div>
+                </li>
+                <li><strong>住宿：</strong>
+                    <div class="btn-container">
+                        <a class="nav-link hotel-link" href="https://maps.app.goo.gl/Uc5JmkZdgZWMJLu16" target="_blank">hotel around TAKAYAMA</a>
+                    </div>
+                    <span class="gps-text">導航電話：0577-33-0606</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Day 2 -->
+        <div class="day-block">
+            <div class="day-title">Day 2 (19/11)：高山晨遊與白川鄉</div>
+            <ul>
+                <li><strong>上午：</strong> 步行遊覽高山老街，逛宮川朝市。
+                    <div class="meal-box">
+                        🍽️ <strong>晨間小食：</strong> 必吃宮川朝市的飛驒牛握壽司、特色布丁。
+                    </div>
+                    <div class="btn-container">
+                        <a class="nav-link" href="https://www.google.com/maps/search/?api=1&query=高山古い町並み" target="_blank">高山老街 (高山古い町並み)</a>
+                    </div>
+                </li>
+                <li><strong>下午：</strong> 驅車前往白川鄉（車程約 50 分鐘），漫步合掌造並前往展望台。
+                    <div class="meal-box">
+                        🍽️ <strong>午餐推薦：</strong> 白川鄉周邊的「手打蕎麥麵」或飛驒鄉土料理「朴葉味噌燒肉」。
+                    </div>
+                    <div class="btn-container">
+                        <a class="nav-link" href="https://www.google.com/maps/search/?api=1&query=白川郷" target="_blank">白川鄉 (白川郷)</a>
+                    </div>
+                    <span class="gps-text">導航電話 (白川鄉停車場)：05769-6-1311</span>
+                </li>
+                <li><strong>傍晚：</strong> 前往郡上（車程約 1 小時 15 分鐘）。</li>
+                <li><strong>晚餐：</strong> 
+                    <div class="meal-box">
+                        🍽️ <strong>當地美食推薦：鰻魚飯 / 郡上炒麵</strong><br>
+                        郡上八幡以清流聞名，推薦吃著名的炭火烤鰻魚（如：魚城），或品嚐日本B級美食「郡上炒麵」。⚠️ 酒店無餐廳，請吃飽或買宵夜再回酒店。
+                    </div>
+                </li>
+                <li><strong>住宿：</strong> 
+                    <div class="btn-container">
+                        <a class="nav-link hotel-link" href="https://www.google.com/maps/search/?api=1&query=Fairfield+by+Marriott+Gifu+Gujo" target="_blank">萬楓酒店 (郡上)</a>
+                    </div>
+                    <span class="gps-text">導航電話：0575-88-3399</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Day 3 -->
+        <div class="day-block">
+            <div class="day-title">Day 3 (20/11)：天空之城與下呂溫泉</div>
+            <ul>
+                <li><strong>上午：</strong> 參觀郡上八幡城，並在城下町散步。
+                    <div class="btn-container">
+                        <a class="nav-link" href="https://www.google.com/maps/search/?api=1&query=郡上八幡城" target="_blank">郡上八幡城 (郡上八幡城)</a>
+                    </div>
+                    <span class="gps-text">導航電話：0575-67-1819</span>
+                </li>
+                <li><strong>下午：</strong> 午餐後，前往下呂溫泉（車程約 1 小時），在溫泉老街散步吃溫泉蛋雪糕。
+                    <div class="meal-box">
+                        🍽️ <strong>午餐推薦：</strong> 抵達下呂前，可品嚐當地的「飛驒牛/豬漢堡」或下呂特產「番茄丼」。
+                    </div>
+                </li>
+                <li><strong>住宿與晚餐：</strong> 提早入住享受露天風呂。
+                    <div class="meal-box">
+                        🍽️ <strong>晚餐推薦：一泊兩食 飛驒牛懷石料理 🥩</strong><br>
+                        今晚的重頭戲！在充滿歷史底蘊的湯之島館內，好好享受頂級的飛驒牛與精緻的日式溫泉料理。
+                    </div>
+                    <div class="btn-container">
+                        <a class="nav-link hotel-link" href="https://www.google.com/maps/search/?api=1&query=湯之島館" target="_blank">湯之島館 (下呂)</a>
+                    </div>
+                    <span class="gps-text">導航電話：0576-25-4126</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Day 4 -->
+        <div class="day-block">
+            <div class="day-title">Day 4 (21/11)：馬籠宿與香嵐溪夜楓</div>
+            <ul>
+                <li><strong>上午：</strong> 前往馬籠宿（車程約 1.5 小時），漫步江戶時代驛站。
+                    <div class="meal-box">
+                        🍽️ <strong>午餐推薦：驛站美食</strong><br>
+                        必吃馬籠宿的現烤「五平餅」（甜鹹核桃味噌醬）、秋季限定的「栗子飯」與手打蕎麥麵。
+                    </div>
+                    <div class="btn-container">
+                        <a class="nav-link" href="https://www.google.com/maps/search/?api=1&query=馬籠宿" target="_blank">馬籠宿 (馬籠宿)</a>
+                    </div>
+                    <span class="gps-text">導航電話 (馬籠館)：0264-59-2511</span>
+                </li>
+                <li><strong>下午：</strong> 驅車前往香嵐溪賞楓（車程約 1.5 小時）。⚠️ 請提早出發，傍晚必定塞車。
+                    <div class="btn-container">
+                        <a class="nav-link" href="https://www.google.com/maps/search/?api=1&query=香嵐渓" target="_blank">香嵐溪 (香嵐渓)</a>
+                    </div>
+                    <span class="gps-text">導航電話 (足助支所)：0565-62-0600</span>
+                </li>
+                <li><strong>晚餐與商圈：</strong> 抵達名古屋後，前往最熱鬧的**榮商圈 (栄)**。
+                    <div class="meal-box">
+                        🍽️ <strong>晚餐推薦：名古屋名物</strong><br>
+                        推薦吃超人氣的「矢場町味噌豬排（矢場とん）」或宵夜吃「世界之山將（世界の山ちゃん）夢幻雞翼」配啤酒。
+                    </div>
+                    <div class="btn-container">
+                        <a class="nav-link" href="https://www.google.com/maps/search/?api=1&query=栄駅+名古屋" target="_blank">榮商圈 (栄)</a>
+                        <a class="nav-link" href="https://www.google.com/maps/search/?api=1&query=オアシス21" target="_blank">綠洲21 (オアシス21)</a>
+                    </div>
+                </li>
+                <li><strong>住宿：</strong>
+                    <div class="btn-container">
+                        <a class="nav-link hotel-link" href="https://www.google.com/maps/search/?api=1&query=Mitsui+Garden+Hotel+Nagoya+Premier" target="_blank">三井花園飯店 (名古屋)</a>
+                    </div>
+                    <span class="gps-text">導航電話：052-587-1131</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Day 5 -->
+        <div class="day-block">
+            <div class="day-title">Day 5 (22/11)：市區觀光與機場分流</div>
+            <ul>
+                <li><strong>上午：</strong> 名古屋市區觀光與最後採購。可前往**大須商店街 (大須商店街)**尋寶。
+                    <div class="meal-box">
+                        🍽️ <strong>午餐推薦：鰻魚飯三吃 (ひつまぶし)</strong><br>
+                        回程前絕對不能錯過！推薦熱田神宮旁的百年老店「蓬萊軒」或其他市區名店，完美結束旅程。
+                    </div>
+                    <div class="btn-container">
+                        <a class="nav-link" href="https://www.google.com/maps/search/?api=1&query=大須商店街" target="_blank">大須商店街 (大須商店街)</a>
+                        <a class="nav-link" href="https://www.google.com/maps/search/?api=1&query=熱田神宮" target="_blank">熱田神宮 (熱田神宮)</a>
+                    </div>
+                </li>
+                <li><strong>下午 14:00：</strong> 兩台車一起開往機場方向。<br>
+                    <strong>15:00</strong> 抵達機場，MU720 乘客下車辦理登機。<br>
+                    <strong>15:15</strong> 其餘 7 人可前往附近的商場逛街。
+                    <div class="btn-container">
+                        <a class="nav-link" href="https://www.google.com/maps/search/?api=1&query=Aeon+Mall+Tokoname" target="_blank">常滑 AEON 商場</a>
+                    </div>
+                </li>
+                <li><strong>晚上 18:00：</strong> 7 人前往機場還車，辦理 UO685 登機。
+                    <div class="btn-container">
+                        <a class="nav-link transport-link" href="https://www.google.com/maps/search/?api=1&query=Toyota+Rent+a+Car+Chubu+International+Airport" target="_blank">Toyota 租車機場店</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</body>
+</html>
