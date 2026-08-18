@@ -16,7 +16,7 @@
             font-size: 18px;
         }
         
-        /* 頂部 Hero 區塊：換回保證能顯示的名古屋圖片，並加上秋季暖橘紅色漸層遮罩營造楓葉氛圍 */
+        /* 頂部 Hero 區塊：保證能顯示的名古屋圖片，加上秋季暖橘紅色漸層遮罩營造楓葉氛圍 */
         .hero {
             background: linear-gradient(rgba(180, 50, 0, 0.4), rgba(0, 0, 0, 0.6)), 
                         url('https://images.unsplash.com/photo-1596422846543-75c6fc197f07?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
@@ -59,7 +59,7 @@
         }
 
         /* 資訊區塊 */
-        .info-box, .emergency-box {
+        .info-box, .emergency-box, .finance-box {
             padding: 15px 20px;
             border-radius: 12px;
             margin-bottom: 20px;
@@ -72,6 +72,33 @@
             border-left: 6px solid #1976d2;
             box-shadow: 0 2px 8px rgba(25, 118, 210, 0.05);
         }
+        
+        /* Splitwise 記帳區塊專屬樣式 */
+        .finance-box {
+            color: #1e5a2d;
+            border-left: 6px solid #27c24c;
+            box-shadow: 0 2px 8px rgba(39, 194, 76, 0.05);
+        }
+        .splitwise-btn {
+            display: inline-block;
+            background-color: #27c24c; 
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
+            margin-top: 10px;
+            box-shadow: 0 4px 6px rgba(39, 194, 76, 0.2);
+            transition: background-color 0.2s;
+        }
+        .splitwise-btn:hover {
+            background-color: #20a33e;
+            color: white;
+        }
+
         .emergency-box {
             color: #e65100;
             border-left: 6px solid #f57c00;
@@ -226,6 +253,16 @@
             <strong>【去程】11/18 (一)</strong> UO680 (10:00 香港 ➔ 14:30 名古屋)<br>
             <strong>【回程】11/22 (五)</strong> MU720 (17:00 起飛) | UO685 (20:40 起飛)
         </div>
+
+        <!-- 👇 記帳本區塊已加入並置頂於此 👇 -->
+        <div class="finance-box">
+            <strong>💰 共同公費池 (Splitwise)：</strong><br>
+            <p style="margin: 8px 0; font-size: 0.95em; color: #444;">行程中所有的共同開支（餐費、油費、停車費等）請統一記錄在此，系統會於行程結束後自動為我們結算分成 3 份。</p>
+            <a class="splitwise-btn" href="https://www.splitwise.com/join/8ocvTL1TWBz+xmtcf" target="_blank">
+                📱 點此開啟 / 加入公費記帳本
+            </a>
+        </div>
+        <!-- 👆 記帳本區塊結束 👆 -->
 
         <div class="emergency-box">
             <strong>💡 自駕與實用提示：</strong><br>
