@@ -4,21 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
+    <meta name="theme-color" content="#1e2a4a">
     <title>日本中部賞楓自駕之旅 2026</title>
     <style>
         :root {
-            --paper: #f7efe3;
-            --card: #fffaf2;
+            --sand: #f1dfc2;
+            --paper: rgba(255, 251, 244, 0.97);
             --ink: #2a1d16;
             --muted: #6b5a4e;
             --maple: #a8321a;
-            --maple-deep: #7d2412;
+            --maple-deep: #6f1d10;
+            --night: #1e2a4a;
             --moss: #4d6a3a;
             --moss-soft: #eef3e8;
             --gold: #b8741a;
             --gold-soft: #fbefd9;
-            --line: #e6d5bf;
+            --line: #e2cfb3;
+            --shadow: 0 4px 16px rgba(90, 40, 15, 0.14);
         }
+        /* 紅葉漸變：由銀杏金黃到深紅，對應五天行程 */
+        .d1 { --day: #e2b231; }
+        .d2 { --day: #e68a1f; }
+        .d3 { --day: #dc5a1e; }
+        .d4 { --day: #bd2a1f; }
+        .d5 { --day: #7d1d2a; }
 
         * { box-sizing: border-box; }
         html { scroll-behavior: smooth; }
@@ -29,55 +38,74 @@
             font-size: 18px;
             line-height: 1.7;
             color: var(--ink);
-            background: var(--paper);
+            background: var(--sand);
         }
 
-        /* 全螢幕楓葉背景（外連圖片失效時，會自動顯示底色） */
+        /* 全頁背景：散落楓葉的和柄 + 四周微暗 */
         body::before {
             content: '';
             position: fixed;
             inset: 0;
             z-index: -1;
             background:
-                linear-gradient(rgba(255, 250, 242, 0.88), rgba(255, 250, 242, 0.88)),
-                url('https://images.unsplash.com/photo-1542317833-28987ec8b871?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80') center/cover no-repeat,
-                var(--paper);
+                radial-gradient(ellipse at 50% 30%, rgba(255,255,255,0) 45%, rgba(140, 60, 20, 0.22) 100%),
+                url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27160%27%20height%3D%27160%27%20viewBox%3D%270%200%20160%20160%27%3E%3Cpath%20transform%3D%27translate%288%2010%29%20rotate%28-20%2050%2050%29%20scale%280.3%29%27%20fill%3D%27%23d9531e%27%20fill-opacity%3D%270.17%27%20d%3D%27M30.8%2056.5%20L21.5%2049.3%20L28.1%2050.4%20L19.4%2036.3%20L34.7%2042.5%20L32.6%2036.1%20L41.2%2044.0%20L42.8%2046.6%20L39.4%2038.2%20L38.8%2023.0%20L43.3%2030.5%20L50.0%2010.0%20L56.7%2030.5%20L61.2%2023.0%20L60.6%2038.2%20L57.2%2046.6%20L58.8%2044.0%20L67.4%2036.1%20L65.3%2042.5%20L80.6%2036.3%20L71.9%2050.4%20L78.5%2049.3%20L69.2%2056.5%20L66.6%2058.3%20L65.8%2059.5%20L75.0%2061.6%20L69.8%2063.0%20L80.9%2070.3%20L67.7%2071.0%20L71.4%2074.9%20L62.4%2072.1%20L50.0%2084.0%20L37.6%2072.1%20L28.6%2074.9%20L32.3%2071.0%20L19.1%2070.3%20L30.2%2063.0%20L25.0%2061.6%20L34.2%2059.5%20L33.4%2058.3%20Z%20M48%2080%20L52%2080%20L52.5%2099%20L47.5%2099%20Z%27%2F%3E%3Cpath%20transform%3D%27translate%2892%2026%29%20rotate%2835%2050%2050%29%20scale%280.22%29%27%20fill%3D%27%23d9a21b%27%20fill-opacity%3D%270.17%27%20d%3D%27M30.8%2056.5%20L21.5%2049.3%20L28.1%2050.4%20L19.4%2036.3%20L34.7%2042.5%20L32.6%2036.1%20L41.2%2044.0%20L42.8%2046.6%20L39.4%2038.2%20L38.8%2023.0%20L43.3%2030.5%20L50.0%2010.0%20L56.7%2030.5%20L61.2%2023.0%20L60.6%2038.2%20L57.2%2046.6%20L58.8%2044.0%20L67.4%2036.1%20L65.3%2042.5%20L80.6%2036.3%20L71.9%2050.4%20L78.5%2049.3%20L69.2%2056.5%20L66.6%2058.3%20L65.8%2059.5%20L75.0%2061.6%20L69.8%2063.0%20L80.9%2070.3%20L67.7%2071.0%20L71.4%2074.9%20L62.4%2072.1%20L50.0%2084.0%20L37.6%2072.1%20L28.6%2074.9%20L32.3%2071.0%20L19.1%2070.3%20L30.2%2063.0%20L25.0%2061.6%20L34.2%2059.5%20L33.4%2058.3%20Z%20M48%2080%20L52%2080%20L52.5%2099%20L47.5%2099%20Z%27%2F%3E%3Cpath%20transform%3D%27translate%2850%2086%29%20rotate%2812%2050%2050%29%20scale%280.26%29%27%20fill%3D%27%23b8281e%27%20fill-opacity%3D%270.17%27%20d%3D%27M30.8%2056.5%20L21.5%2049.3%20L28.1%2050.4%20L19.4%2036.3%20L34.7%2042.5%20L32.6%2036.1%20L41.2%2044.0%20L42.8%2046.6%20L39.4%2038.2%20L38.8%2023.0%20L43.3%2030.5%20L50.0%2010.0%20L56.7%2030.5%20L61.2%2023.0%20L60.6%2038.2%20L57.2%2046.6%20L58.8%2044.0%20L67.4%2036.1%20L65.3%2042.5%20L80.6%2036.3%20L71.9%2050.4%20L78.5%2049.3%20L69.2%2056.5%20L66.6%2058.3%20L65.8%2059.5%20L75.0%2061.6%20L69.8%2063.0%20L80.9%2070.3%20L67.7%2071.0%20L71.4%2074.9%20L62.4%2072.1%20L50.0%2084.0%20L37.6%2072.1%20L28.6%2074.9%20L32.3%2071.0%20L19.1%2070.3%20L30.2%2063.0%20L25.0%2061.6%20L34.2%2059.5%20L33.4%2058.3%20Z%20M48%2080%20L52%2080%20L52.5%2099%20L47.5%2099%20Z%27%2F%3E%3Cpath%20transform%3D%27translate%28122%20104%29%20rotate%28-40%2050%2050%29%20scale%280.3%29%27%20fill%3D%27%23e0801f%27%20fill-opacity%3D%270.17%27%20d%3D%27M30.8%2056.5%20L21.5%2049.3%20L28.1%2050.4%20L19.4%2036.3%20L34.7%2042.5%20L32.6%2036.1%20L41.2%2044.0%20L42.8%2046.6%20L39.4%2038.2%20L38.8%2023.0%20L43.3%2030.5%20L50.0%2010.0%20L56.7%2030.5%20L61.2%2023.0%20L60.6%2038.2%20L57.2%2046.6%20L58.8%2044.0%20L67.4%2036.1%20L65.3%2042.5%20L80.6%2036.3%20L71.9%2050.4%20L78.5%2049.3%20L69.2%2056.5%20L66.6%2058.3%20L65.8%2059.5%20L75.0%2061.6%20L69.8%2063.0%20L80.9%2070.3%20L67.7%2071.0%20L71.4%2074.9%20L62.4%2072.1%20L50.0%2084.0%20L37.6%2072.1%20L28.6%2074.9%20L32.3%2071.0%20L19.1%2070.3%20L30.2%2063.0%20L25.0%2061.6%20L34.2%2059.5%20L33.4%2058.3%20Z%20M48%2080%20L52%2080%20L52.5%2099%20L47.5%2099%20Z%27%2F%3E%3Cpath%20transform%3D%27translate%2814%20122%29%20rotate%2850%2050%2050%29%20scale%280.2%29%27%20fill%3D%27%238a3a1c%27%20fill-opacity%3D%270.17%27%20d%3D%27M30.8%2056.5%20L21.5%2049.3%20L28.1%2050.4%20L19.4%2036.3%20L34.7%2042.5%20L32.6%2036.1%20L41.2%2044.0%20L42.8%2046.6%20L39.4%2038.2%20L38.8%2023.0%20L43.3%2030.5%20L50.0%2010.0%20L56.7%2030.5%20L61.2%2023.0%20L60.6%2038.2%20L57.2%2046.6%20L58.8%2044.0%20L67.4%2036.1%20L65.3%2042.5%20L80.6%2036.3%20L71.9%2050.4%20L78.5%2049.3%20L69.2%2056.5%20L66.6%2058.3%20L65.8%2059.5%20L75.0%2061.6%20L69.8%2063.0%20L80.9%2070.3%20L67.7%2071.0%20L71.4%2074.9%20L62.4%2072.1%20L50.0%2084.0%20L37.6%2072.1%20L28.6%2074.9%20L32.3%2071.0%20L19.1%2070.3%20L30.2%2063.0%20L25.0%2061.6%20L34.2%2059.5%20L33.4%2058.3%20Z%20M48%2080%20L52%2080%20L52.5%2099%20L47.5%2099%20Z%27%2F%3E%3C%2Fsvg%3E") 0 0 / 160px 160px repeat,
+                var(--sand);
         }
 
-        a:focus-visible, .nav-link:focus-visible, .splitwise-btn:focus-visible {
-            outline: 3px solid var(--gold);
-            outline-offset: 2px;
-        }
+        a:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
 
-        /* Hero */
+        /* Hero：黃昏紅葉 */
         .hero {
-            min-height: 240px;
+            position: relative;
+            overflow: hidden;
+            min-height: 300px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 36px 20px;
+            padding: 48px 20px 56px;
             color: #fff;
             background:
-                linear-gradient(rgba(150, 40, 10, 0.45), rgba(30, 10, 0, 0.65)),
+                linear-gradient(180deg, rgba(30, 42, 74, 0.93) 0%, rgba(110, 34, 60, 0.86) 40%, rgba(190, 60, 28, 0.82) 74%, rgba(236, 148, 50, 0.80) 100%),
                 url('https://images.unsplash.com/photo-1596422846543-75c6fc197f07?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80') center/cover no-repeat,
-                #7d2412;
+                #5b2a45;
         }
+        .hero-kanji {
+            position: absolute;
+            right: 5%;
+            top: -8px;
+            writing-mode: vertical-rl;
+            font-family: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
+            font-weight: 900;
+            font-size: clamp(6rem, 24vw, 12rem);
+            line-height: 1;
+            letter-spacing: 0.05em;
+            color: #fff;
+            opacity: 0.11;
+            pointer-events: none;
+            user-select: none;
+        }
+        .hero-leaf { position: absolute; pointer-events: none; }
+        .hero h1, .hero p { position: relative; z-index: 2; }
         .hero h1 {
             margin: 0;
             font-family: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
-            font-size: 2.3em;
+            font-size: clamp(2.1rem, 7.5vw, 3.4rem);
             font-weight: 900;
-            letter-spacing: 2px;
-            text-shadow: 2px 3px 6px rgba(0,0,0,0.8);
+            letter-spacing: 0.14em;
+            text-shadow: 0 3px 10px rgba(0,0,0,0.55);
         }
         .hero p {
-            margin: 10px 0 0;
-            font-size: 1.15em;
+            margin: 18px 0 0;
+            padding: 7px 20px;
+            font-size: 1.05em;
             font-weight: 700;
             color: #fff3d6;
-            text-shadow: 1px 2px 5px rgba(0,0,0,0.8);
+            border: 1.5px solid rgba(255, 243, 214, 0.6);
+            border-radius: 999px;
+            background: rgba(20, 10, 10, 0.22);
         }
 
         /* 每日跳轉導航 */
@@ -90,58 +118,80 @@
             overflow-x: auto;
             padding: 10px 14px;
             background: var(--maple-deep);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+            border-bottom: 4px solid;
+            border-image: linear-gradient(90deg, #e2b231, #e68a1f, #dc5a1e, #bd2a1f, #7d1d2a) 1;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.28);
             -webkit-overflow-scrolling: touch;
         }
         .daynav a {
             flex: 0 0 auto;
-            color: #fff;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 0.9em;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
             padding: 6px 16px;
-            border-radius: 999px;
             border: 1.5px solid rgba(255,255,255,0.45);
+            border-radius: 999px;
+            color: #fff;
+            font-size: 0.9em;
+            font-weight: 700;
+            text-decoration: none;
             white-space: nowrap;
+        }
+        .daynav a[class^="d"]::before {
+            content: '';
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--day);
+            box-shadow: 0 0 0 2px rgba(255,255,255,0.7);
         }
         .daynav a:hover, .daynav a:focus-visible { background: #fff; color: var(--maple-deep); }
 
         .container {
             max-width: 820px;
-            margin: 24px auto 48px;
-            padding: 28px 24px;
-            background: var(--card);
-            border: 1px solid var(--line);
-            border-radius: 14px;
-            box-shadow: 0 6px 22px rgba(60, 30, 10, 0.12);
+            margin: 28px auto 56px;
+            padding: 0 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
         }
 
-        /* 區塊 */
+        /* 區塊（紙卡） */
         .section-title {
             margin: 0 0 12px;
             font-family: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
             font-size: 1.3em;
             color: var(--maple-deep);
         }
+        .section-title::before {
+            content: '';
+            display: inline-block;
+            width: 1.05em;
+            height: 1.05em;
+            margin-right: 0.45em;
+            vertical-align: -0.14em;
+            background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20100%20100%27%3E%3Cpath%20fill%3D%27%23a8321a%27%20d%3D%27M30.8%2056.5%20L21.5%2049.3%20L28.1%2050.4%20L19.4%2036.3%20L34.7%2042.5%20L32.6%2036.1%20L41.2%2044.0%20L42.8%2046.6%20L39.4%2038.2%20L38.8%2023.0%20L43.3%2030.5%20L50.0%2010.0%20L56.7%2030.5%20L61.2%2023.0%20L60.6%2038.2%20L57.2%2046.6%20L58.8%2044.0%20L67.4%2036.1%20L65.3%2042.5%20L80.6%2036.3%20L71.9%2050.4%20L78.5%2049.3%20L69.2%2056.5%20L66.6%2058.3%20L65.8%2059.5%20L75.0%2061.6%20L69.8%2063.0%20L80.9%2070.3%20L67.7%2071.0%20L71.4%2074.9%20L62.4%2072.1%20L50.0%2084.0%20L37.6%2072.1%20L28.6%2074.9%20L32.3%2071.0%20L19.1%2070.3%20L30.2%2063.0%20L25.0%2061.6%20L34.2%2059.5%20L33.4%2058.3%20Z%20M48%2080%20L52%2080%20L52.5%2099%20L47.5%2099%20Z%27%2F%3E%3C%2Fsvg%3E") center/contain no-repeat;
+        }
         .box {
-            padding: 16px 20px;
-            margin-bottom: 24px;
-            border-radius: 10px;
+            padding: 18px 22px;
+            margin: 0;
             border: 1px solid var(--line);
             border-left: 6px solid var(--maple);
-            background: #fff;
+            border-radius: 12px;
+            background: var(--paper);
+            box-shadow: var(--shadow);
             scroll-margin-top: 70px;
         }
-        .box.green { border-left-color: var(--moss); background: var(--moss-soft); }
-        .box.gold { border-left-color: var(--gold); background: var(--gold-soft); }
+        .box.green { border-left-color: var(--moss); background: linear-gradient(var(--moss-soft), var(--moss-soft)), var(--paper); }
+        .box.gold { border-left-color: var(--gold); background: linear-gradient(var(--gold-soft), var(--gold-soft)), var(--paper); }
         .box p { margin: 6px 0; }
-        .box ul { margin: 6px 0 0; padding-left: 22px; font-size: 1em; line-height: 1.7; }
+        .box ul { margin: 6px 0 0; padding-left: 22px; line-height: 1.7; }
         .box li { margin-bottom: 8px; }
 
         .muted { color: var(--muted); font-size: 0.9em; }
 
         /* 行程總覽 */
-        .table-wrap { overflow-x: auto; margin-bottom: 24px; scroll-margin-top: 70px; }
+        .table-wrap { overflow-x: auto; margin: 0; }
         table.overview {
             width: 100%;
             border-collapse: collapse;
@@ -156,7 +206,7 @@
             border-bottom: 1px solid var(--line);
         }
         .overview th { background: var(--maple-deep); color: #fff; font-weight: 700; white-space: nowrap; }
-        .overview td:first-child { white-space: nowrap; font-weight: 700; color: var(--maple-deep); }
+        .overview td:first-child { white-space: nowrap; font-weight: 700; color: var(--maple-deep); border-left: 8px solid var(--day, transparent); }
         .overview tr:last-child td { border-bottom: none; }
 
         /* 分車 */
@@ -192,34 +242,52 @@
             border-radius: 8px;
             background: #fff;
         }
-        .hotel-card:last-child { margin-bottom: 0; }
+        .hotel-card:last-of-type { margin-bottom: 0; }
         .hotel-card .day-tag { font-size: 0.85em; color: var(--muted); }
         .hotel-card .name { font-weight: 800; font-size: 1.05em; }
 
-        /* 每日時間軸 */
+        /* 每日行程卡：頂邊顏色隨紅葉漸變，右上角是大型漢字數字 */
         .day-block {
             position: relative;
-            margin: 40px 0;
-            padding-left: 24px;
-            border-left: 4px solid var(--maple);
+            overflow: hidden;
+            margin: 0;
+            padding: 22px 24px 6px;
+            background: var(--paper);
+            border: 1px solid var(--line);
+            border-top: 7px solid var(--day);
+            border-radius: 14px;
+            box-shadow: var(--shadow);
             scroll-margin-top: 70px;
         }
-        .day-block::before {
-            content: '';
+        .day-block::after {
+            content: attr(data-kanji);
             position: absolute;
-            left: -12px;
-            top: 4px;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: var(--maple);
-            box-shadow: 0 0 0 4px rgba(168, 50, 26, 0.2);
-        }
-        .day-date { display: block; font-size: 0.85em; font-weight: 700; color: var(--muted); }
-        .day-title {
-            margin: 0 0 14px;
+            right: 14px;
+            top: -6px;
             font-family: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
-            font-size: 1.45em;
+            font-weight: 900;
+            font-size: 7.5rem;
+            line-height: 1;
+            color: var(--day);
+            opacity: 0.16;
+            pointer-events: none;
+            user-select: none;
+        }
+        .day-block > * { position: relative; z-index: 1; }
+        .day-date {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9em;
+            font-weight: 700;
+            color: var(--muted);
+        }
+        .day-leaf { width: 28px; height: 28px; flex: none; fill: var(--day); }
+        .day-title {
+            margin: 4px 0 16px;
+            max-width: calc(100% - 70px);
+            font-family: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
+            font-size: 1.5em;
             font-weight: 800;
             color: var(--maple-deep);
             line-height: 1.35;
@@ -280,13 +348,69 @@
         .hotel-link::before { content: '🏨'; }
         .hotel-link:hover { background: var(--maple); color: #fff; }
 
-        .footer { margin-top: 30px; text-align: center; color: var(--muted); font-size: 0.85em; }
+        .footer {
+            margin: 6px 0 0;
+            text-align: center;
+            color: var(--maple-deep);
+            font-size: 0.85em;
+            font-weight: 700;
+        }
+
+
+        /* 天氣預報 */
+        .wx-status {
+            margin: 10px 0 12px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            background: #eef3f8;
+            color: #24435f;
+            font-size: 0.92em;
+        }
+        .wx-status.wait { background: var(--gold-soft); color: #5e3a08; }
+        .wx-status.ok { background: var(--moss-soft); color: #2f4a21; }
+        .wx-status.warn { background: #fdecea; color: #7a1f10; }
+        table.wx-table {
+            width: 100%;
+            min-width: 440px;
+            border-collapse: collapse;
+            table-layout: fixed;
+            background: #fff;
+            border: 1px solid var(--line);
+            font-size: 0.88em;
+        }
+        .wx-table th, .wx-table td { padding: 8px 4px; border-bottom: 1px solid var(--line); text-align: center; vertical-align: top; }
+        .wx-table thead th { background: var(--maple-deep); color: #fff; font-weight: 700; line-height: 1.35; }
+        .wx-table thead th span { display: block; font-size: 0.8em; font-weight: 500; opacity: 0.85; }
+        .wx-table thead th:first-child { width: 22%; }
+        .wx-table tbody th {
+            padding-left: 8px;
+            text-align: left;
+            border-left: 8px solid var(--day);
+            color: var(--maple-deep);
+            font-weight: 700;
+            line-height: 1.4;
+        }
+        .wx-table tbody th span { display: block; font-size: 0.82em; font-weight: 500; color: var(--muted); }
+        .wx-table tr:last-child th, .wx-table tr:last-child td { border-bottom: none; }
+        .wx-table td { color: var(--muted); }
+        .wx-ico { font-size: 1.7em; line-height: 1.2; }
+        .wx-lbl { font-weight: 700; color: var(--ink); }
+        .wx-t { margin-top: 2px; }
+        .wx-t .hi { color: var(--maple); }
+        .wx-t .lo { color: #2f5d8a; }
+        .wx-p, .wx-r { font-size: 0.85em; color: var(--muted); }
+        .wx-links { margin-top: 14px; }
+        .wx-links .nav-link::before { content: '☁️'; }
+        .wx-credit { margin: 12px 0 0; }
 
         @media (max-width: 600px) {
             body { font-size: 16px; }
-            .hero h1 { font-size: 1.9em; }
-            .container { margin: 16px 10px 32px; padding: 20px 14px; }
-            .day-block { padding-left: 18px; }
+            .hero { min-height: 260px; padding: 40px 16px 48px; }
+            .container { margin: 18px auto 40px; padding: 0 10px; gap: 16px; }
+            .box { padding: 16px 16px; }
+            .day-block { padding: 18px 16px 4px; }
+            .day-block::after { font-size: 5.5rem; right: 8px; }
+            .day-title { max-width: calc(100% - 50px); font-size: 1.35em; }
             .nav-link { width: 100%; justify-content: center; padding: 12px 16px; }
             .gps-text { width: 100%; font-size: 0.95em; }
             .cars { grid-template-columns: 1fr; }
@@ -295,18 +419,30 @@
 </head>
 <body>
 
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+        <symbol id="leaf" viewBox="0 0 100 100"><path d="M30.8 56.5 L21.5 49.3 L28.1 50.4 L19.4 36.3 L34.7 42.5 L32.6 36.1 L41.2 44.0 L42.8 46.6 L39.4 38.2 L38.8 23.0 L43.3 30.5 L50.0 10.0 L56.7 30.5 L61.2 23.0 L60.6 38.2 L57.2 46.6 L58.8 44.0 L67.4 36.1 L65.3 42.5 L80.6 36.3 L71.9 50.4 L78.5 49.3 L69.2 56.5 L66.6 58.3 L65.8 59.5 L75.0 61.6 L69.8 63.0 L80.9 70.3 L67.7 71.0 L71.4 74.9 L62.4 72.1 L50.0 84.0 L37.6 72.1 L28.6 74.9 L32.3 71.0 L19.1 70.3 L30.2 63.0 L25.0 61.6 L34.2 59.5 L33.4 58.3 Z M48 80 L52 80 L52.5 99 L47.5 99 Z"/></symbol>
+    </svg>
+
     <div class="hero">
-        <h1>🍁 日本中部賞楓自駕遊</h1>
+        <div class="hero-kanji" aria-hidden="true">紅葉</div>
+        <svg class="hero-leaf" style="width:96px;height:96px;left:5%;top:14%;transform:rotate(-24deg);fill:#f0a030;opacity:.9" aria-hidden="true"><use href="#leaf"/></svg>
+        <svg class="hero-leaf" style="width:54px;height:54px;left:22%;bottom:12%;transform:rotate(32deg);fill:#e3562a;opacity:.85" aria-hidden="true"><use href="#leaf"/></svg>
+        <svg class="hero-leaf" style="width:70px;height:70px;right:20%;bottom:10%;transform:rotate(-10deg);fill:#c42d1e;opacity:.8" aria-hidden="true"><use href="#leaf"/></svg>
+        <svg class="hero-leaf" style="width:38px;height:38px;left:12%;bottom:34%;transform:rotate(60deg);fill:#ffd36b;opacity:.7" aria-hidden="true"><use href="#leaf"/></svg>
+        <svg class="hero-leaf" style="width:130px;height:130px;right:-24px;top:42%;transform:rotate(18deg);fill:#d9531e;opacity:.45;filter:blur(1px)" aria-hidden="true"><use href="#leaf"/></svg>
+        <svg class="hero-leaf" style="width:44px;height:44px;right:34%;top:12%;transform:rotate(-48deg);fill:#f4b942;opacity:.75" aria-hidden="true"><use href="#leaf"/></svg>
+        <h1>日本中部賞楓自駕遊</h1>
         <p>2026 年 11 月 18 日（三）– 22 日（日）｜ 8 人 2 車</p>
     </div>
 
     <nav class="daynav" aria-label="行程跳轉">
         <a href="#overview">總覽</a>
-        <a href="#day1">Day 1</a>
-        <a href="#day2">Day 2</a>
-        <a href="#day3">Day 3</a>
-        <a href="#day4">Day 4</a>
-        <a href="#day5">Day 5</a>
+        <a href="#weather">天氣</a>
+        <a class="d1" href="#day1">Day 1</a>
+        <a class="d2" href="#day2">Day 2</a>
+        <a class="d3" href="#day3">Day 3</a>
+        <a class="d4" href="#day4">Day 4</a>
+        <a class="d5" href="#day5">Day 5</a>
         <a href="#hotels">住宿</a>
     </nav>
 
@@ -322,20 +458,55 @@
             <p><strong>回程　11/22（日）</strong>　UO685　20:40 名古屋 → 香港：全部 8 人</p>
         </div>
 
-        <h2 class="section-title" id="overview" style="scroll-margin-top:70px">行程總覽</h2>
+        <div class="box" id="overview">
+            <h2 class="section-title">行程總覽</h2>
         <div class="table-wrap">
             <table class="overview">
                 <thead>
                     <tr><th>日期</th><th>路線</th><th>住宿</th></tr>
                 </thead>
                 <tbody>
-                    <tr><td><a href="#day1" style="color:inherit">Day 1<br>11/18（三）</a></td><td>名古屋機場 → 名古屋站晚餐 → 夜駛高山</td><td>Hotel Around Takayama（高山）</td></tr>
-                    <tr><td><a href="#day2" style="color:inherit">Day 2<br>11/19（四）</a></td><td>高山老街 → 白川鄉 → 郡上</td><td>萬楓酒店（郡上）</td></tr>
-                    <tr><td><a href="#day3" style="color:inherit">Day 3<br>11/20（五）</a></td><td>郡上八幡城 → 下呂溫泉</td><td>湯之島館（下呂）</td></tr>
-                    <tr><td><a href="#day4" style="color:inherit">Day 4<br>11/21（六）</a></td><td>馬籠宿 → 香嵐溪 → 名古屋榮</td><td>三井花園飯店（名古屋）</td></tr>
-                    <tr><td><a href="#day5" style="color:inherit">Day 5<br>11/22（日）</a></td><td>名古屋市區 → 機場返港</td><td>—</td></tr>
+                    <tr class="d1"><td><a href="#day1" style="color:inherit">Day 1<br>11/18（三）</a></td><td>名古屋機場 → 名古屋站晚餐 → 夜駛高山</td><td>Hotel Around Takayama（高山）</td></tr>
+                    <tr class="d2"><td><a href="#day2" style="color:inherit">Day 2<br>11/19（四）</a></td><td>高山老街 → 白川鄉 → 郡上</td><td>萬楓酒店（郡上）</td></tr>
+                    <tr class="d3"><td><a href="#day3" style="color:inherit">Day 3<br>11/20（五）</a></td><td>郡上八幡城 → 下呂溫泉</td><td>湯之島館（下呂）</td></tr>
+                    <tr class="d4"><td><a href="#day4" style="color:inherit">Day 4<br>11/21（六）</a></td><td>馬籠宿 → 香嵐溪 → 名古屋榮</td><td>三井花園飯店（名古屋）</td></tr>
+                    <tr class="d5"><td><a href="#day5" style="color:inherit">Day 5<br>11/22（日）</a></td><td>名古屋市區 → 機場返港</td><td>—</td></tr>
                 </tbody>
             </table>
+            </div>
+        </div>
+
+        <div class="box" id="weather">
+            <h2 class="section-title">天氣預報</h2>
+            <p class="muted">資料來自日本氣象廳（気象庁），每次打開本頁都會重新讀取。氣象廳只提供未來約 7 天的預報：11/18 的預報大約從 11/11 開始出現，11/22 的預報大約從 11/15 開始出現，在那之前格子會顯示「—」。</p>
+            <p class="wx-status" id="wx-status">正在讀取氣象廳資料…</p>
+            <div class="table-wrap">
+                <table class="wx-table">
+                    <thead>
+                        <tr>
+                            <th>日期</th>
+                            <th>飛騨<span>高山、白川鄉、下呂</span></th>
+                            <th>美濃<span>郡上、馬籠</span></th>
+                            <th>愛知西部<span>名古屋、香嵐溪</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="d1"><th scope="row">Day 1<span>11/18（三）<br>名古屋→高山</span></th><td data-wx data-date="2026-11-18" data-col="hida">—</td><td data-wx data-date="2026-11-18" data-col="mino">—</td><td data-wx data-date="2026-11-18" data-col="nagoya">—</td></tr>
+                        <tr class="d2"><th scope="row">Day 2<span>11/19（四）<br>高山→白川鄉→郡上</span></th><td data-wx data-date="2026-11-19" data-col="hida">—</td><td data-wx data-date="2026-11-19" data-col="mino">—</td><td data-wx data-date="2026-11-19" data-col="nagoya">—</td></tr>
+                        <tr class="d3"><th scope="row">Day 3<span>11/20（五）<br>郡上→下呂</span></th><td data-wx data-date="2026-11-20" data-col="hida">—</td><td data-wx data-date="2026-11-20" data-col="mino">—</td><td data-wx data-date="2026-11-20" data-col="nagoya">—</td></tr>
+                        <tr class="d4"><th scope="row">Day 4<span>11/21（六）<br>馬籠→香嵐溪→名古屋</span></th><td data-wx data-date="2026-11-21" data-col="hida">—</td><td data-wx data-date="2026-11-21" data-col="mino">—</td><td data-wx data-date="2026-11-21" data-col="nagoya">—</td></tr>
+                        <tr class="d5"><th scope="row">Day 5<span>11/22（日）<br>名古屋→機場</span></th><td data-wx data-date="2026-11-22" data-col="hida">—</td><td data-wx data-date="2026-11-22" data-col="mino">—</td><td data-wx data-date="2026-11-22" data-col="nagoya">—</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="muted">氣溫（最高 / 最低）取自高山、岐阜、名古屋三個觀測點，白川鄉、郡上、馬籠等山區會更冷，請準備保暖衣物。「降雨」是降雨機率；「可信度」A 最高、C 最低，只會出現在較遠的日期，預報也可能還會變動。</p>
+            <div class="btn-container wx-links">
+                <a class="nav-link" href="https://www.jma.go.jp/bosai/forecast/#area_type=offices&area_code=210000" target="_blank" rel="noopener">氣象廳：岐阜縣 <span class="jp" lang="ja">気象庁 岐阜県</span></a>
+                <a class="nav-link" href="https://www.jma.go.jp/bosai/forecast/#area_type=offices&area_code=230000" target="_blank" rel="noopener">氣象廳：愛知縣 <span class="jp" lang="ja">気象庁 愛知県</span></a>
+                <a class="nav-link" href="https://tenki.jp/" target="_blank" rel="noopener">tenki.jp <span class="jp" lang="ja">日本気象協会</span></a>
+                <a class="nav-link" href="https://weather.yahoo.co.jp/weather/" target="_blank" rel="noopener">Yahoo!天気 <span class="jp" lang="ja">Yahoo!天気・災害</span></a>
+            </div>
+            <p class="muted wx-credit">出典：気象庁ホームページ（https://www.jma.go.jp/）</p>
         </div>
 
         <div class="box gold">
@@ -367,8 +538,8 @@
         </div>
 
         <!-- Day 1 -->
-        <section class="day-block" id="day1">
-            <span class="day-date">Day 1　11/18（三）</span>
+        <section class="day-block d1" id="day1" data-kanji="一">
+            <span class="day-date"><svg class="day-leaf" aria-hidden="true"><use href="#leaf"/></svg>Day 1　11/18（三）</span>
             <h2 class="day-title">抵達名古屋，晚餐後夜駛高山</h2>
             <ul>
                 <li><strong>抵達與租車：</strong>14:30 抵達，過關、領行李後取 2 台車。Jess 預定 <strong>16:00</strong> 抵達，會合後預計 <strong>16:45–17:00</strong> 出發，前往名古屋站一帶（車程約 45–60 分鐘）。等待期間可在機場內吃點東西、逛街。
@@ -404,8 +575,8 @@
         </section>
 
         <!-- Day 2 -->
-        <section class="day-block" id="day2">
-            <span class="day-date">Day 2　11/19（四）</span>
+        <section class="day-block d2" id="day2" data-kanji="二">
+            <span class="day-date"><svg class="day-leaf" aria-hidden="true"><use href="#leaf"/></svg>Day 2　11/19（四）</span>
             <h2 class="day-title">高山晨遊與白川鄉</h2>
             <ul>
                 <li><strong>上午：</strong>昨晚深夜才到，可以睡晚一點再出發。步行遊覽高山老街，逛宮川朝市。
@@ -442,8 +613,8 @@
         </section>
 
         <!-- Day 3 -->
-        <section class="day-block" id="day3">
-            <span class="day-date">Day 3　11/20（五）</span>
+        <section class="day-block d3" id="day3" data-kanji="三">
+            <span class="day-date"><svg class="day-leaf" aria-hidden="true"><use href="#leaf"/></svg>Day 3　11/20（五）</span>
             <h2 class="day-title">天空之城與下呂溫泉</h2>
             <ul>
                 <li><strong>上午：</strong>參觀郡上八幡城，並在城下町散步。
@@ -471,8 +642,8 @@
         </section>
 
         <!-- Day 4 -->
-        <section class="day-block" id="day4">
-            <span class="day-date">Day 4　11/21（六）</span>
+        <section class="day-block d4" id="day4" data-kanji="四">
+            <span class="day-date"><svg class="day-leaf" aria-hidden="true"><use href="#leaf"/></svg>Day 4　11/21（六）</span>
             <h2 class="day-title">馬籠宿與香嵐溪夜楓</h2>
             <ul>
                 <li><strong>上午：</strong>前往馬籠宿（車程約 1.5 小時），漫步江戶時代驛站。
@@ -512,8 +683,8 @@
         </section>
 
         <!-- Day 5 -->
-        <section class="day-block" id="day5">
-            <span class="day-date">Day 5　11/22（日）</span>
+        <section class="day-block d5" id="day5" data-kanji="五">
+            <span class="day-date"><svg class="day-leaf" aria-hidden="true"><use href="#leaf"/></svg>Day 5　11/22（日）</span>
             <h2 class="day-title">市區觀光與返港</h2>
             <ul>
                 <li><strong>上午：</strong>名古屋市區觀光與最後採購，可到<strong>大須商店街</strong>尋寶。
@@ -577,5 +748,195 @@
         <p class="footer">此頁面只供家人參考，請勿公開轉發。</p>
 
     </div>
+    <script>
+(function () {
+    var DAYS = ['2026-11-18', '2026-11-19', '2026-11-20', '2026-11-21', '2026-11-22'];
+    var BASE = 'https://www.jma.go.jp/bosai/forecast/data/forecast/';
+    /* 氣象廳預報區：岐阜 210000、愛知 230000；氣溫取自高山、岐阜、名古屋 */
+    var COLS = {
+        hida:   { office: '210000', names: ['飛騨'], station: ['高山'] },
+        mino:   { office: '210000', names: ['美濃'], station: ['岐阜'] },
+        nagoya: { office: '230000', names: ['西部', '愛知'], station: ['名古屋'] }
+    };
+
+    var KINDS = {
+        sun:    ['☀️', '晴'],
+        partly: ['🌤️', '晴時多雲'],
+        mixed:  ['⛅', '多雲時晴'],
+        cloud:  ['☁️', '多雲'],
+        shower: ['🌦️', '陣雨'],
+        rain:   ['🌧️', '雨'],
+        snow:   ['🌨️', '雪'],
+        storm:  ['⛈️', '雷雨'],
+        fog:    ['🌫️', '霧']
+    };
+
+    function has(list, code) { return list.indexOf(code) !== -1; }
+
+    /* 氣象廳天氣代碼 → 簡單分類 */
+    function kindOf(code) {
+        var c = String(code);
+        var first = c.charAt(0);
+        if (c === '100') return 'sun';
+        if (first === '1') {
+            if (has(['104', '105', '115', '116', '117', '181'], c)) return 'snow';
+            if (has(['102', '103', '106', '107', '108', '112', '113', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '130', '140'], c)) return 'shower';
+            if (c === '114') return 'rain';
+            return 'partly';
+        }
+        if (first === '2') {
+            if (c === '209') return 'fog';
+            if (has(['204', '205', '215', '216', '217', '223', '228', '229', '230', '231', '250', '260', '270', '281'], c)) return 'snow';
+            if (has(['202', '203', '206', '207', '212', '213', '214', '218', '219', '220', '221', '222', '224', '225', '226', '240'], c)) return 'rain';
+            if (has(['208', '350'], c)) return 'storm';
+            if (has(['201', '210', '211'], c)) return 'mixed';
+            return 'cloud';
+        }
+        if (first === '3') {
+            if (has(['308', '350'], c)) return 'storm';
+            if (has(['303', '309', '314', '315', '316', '317', '328', '329', '350'], c)) return 'snow';
+            if (has(['301', '311'], c)) return 'shower';
+            return 'rain';
+        }
+        if (first === '4') {
+            if (has(['401', '411'], c)) return 'snow';
+            return 'snow';
+        }
+        return 'cloud';
+    }
+
+    function areaName(a) { return (a && a.area && a.area.name) || ''; }
+
+    function pick(areas, names) {
+        if (!areas || !areas.length) return null;
+        for (var i = 0; i < names.length; i++) {
+            for (var j = 0; j < areas.length; j++) {
+                if (areaName(areas[j]).indexOf(names[i]) !== -1) return areas[j];
+            }
+        }
+        return areas[0];
+    }
+
+    function entry(out, d) { if (!out[d]) out[d] = {}; return out[d]; }
+
+    function parse(data, col) {
+        var out = {};
+        if (!Array.isArray(data)) return out;
+
+        /* 3 日內的詳細預報 */
+        var st = (data[0] && data[0].timeSeries) || [];
+        if (st[0] && st[0].timeDefines) {
+            var a0 = pick(st[0].areas, col.names);
+            if (a0 && a0.weatherCodes) {
+                st[0].timeDefines.forEach(function (t, i) {
+                    if (a0.weatherCodes[i]) entry(out, t.slice(0, 10)).code = a0.weatherCodes[i];
+                });
+            }
+        }
+
+        /* 週間預報（發表翌日起 7 天） */
+        var wk = (data[1] && data[1].timeSeries) || [];
+        if (wk[0] && wk[0].timeDefines) {
+            var a1 = pick(wk[0].areas, col.names);
+            if (a1) {
+                wk[0].timeDefines.forEach(function (t, i) {
+                    var o = entry(out, t.slice(0, 10));
+                    if (a1.weatherCodes && a1.weatherCodes[i] && !o.code) o.code = a1.weatherCodes[i];
+                    if (a1.pops && a1.pops[i] !== undefined && a1.pops[i] !== '') o.pop = a1.pops[i];
+                    if (a1.reliabilities && a1.reliabilities[i]) o.rel = a1.reliabilities[i];
+                });
+            }
+        }
+        if (wk[1] && wk[1].timeDefines) {
+            var a2 = pick(wk[1].areas, col.station);
+            if (a2) {
+                wk[1].timeDefines.forEach(function (t, i) {
+                    var o = entry(out, t.slice(0, 10));
+                    if (a2.tempsMax && a2.tempsMax[i] !== undefined && a2.tempsMax[i] !== '') o.max = a2.tempsMax[i];
+                    if (a2.tempsMin && a2.tempsMin[i] !== undefined && a2.tempsMin[i] !== '') o.min = a2.tempsMin[i];
+                });
+            }
+        }
+        return out;
+    }
+
+    function cellHtml(info) {
+        if (!info || !info.code) return '—';
+        var k = KINDS[kindOf(info.code)];
+        var h = '<div class="wx-ico" aria-hidden="true">' + k[0] + '</div><div class="wx-lbl">' + k[1] + '</div>';
+        if (info.max !== undefined || info.min !== undefined) {
+            h += '<div class="wx-t">' +
+                (info.max !== undefined ? '<b class="hi">' + info.max + '°</b>' : '') +
+                (info.max !== undefined && info.min !== undefined ? ' / ' : '') +
+                (info.min !== undefined ? '<b class="lo">' + info.min + '°</b>' : '') + '</div>';
+        }
+        if (info.pop !== undefined) h += '<div class="wx-p">降雨 ' + info.pop + '%</div>';
+        if (info.rel) h += '<div class="wx-r">可信度 ' + info.rel + '</div>';
+        return h;
+    }
+
+    function md(dateStr) { return parseInt(dateStr.slice(5, 7), 10) + '/' + parseInt(dateStr.slice(8, 10), 10); }
+
+    function fmtReport(iso) {
+        if (!iso) return '';
+        return parseInt(iso.slice(5, 7), 10) + '/' + parseInt(iso.slice(8, 10), 10) + ' ' + iso.slice(11, 16);
+    }
+
+    function load(office) {
+        return fetch(BASE + office + '.json', { cache: 'no-store' }).then(function (r) {
+            if (!r.ok) throw new Error('HTTP ' + r.status);
+            return r.json();
+        });
+    }
+
+    function run() {
+        var statusEl = document.getElementById('wx-status');
+        var cells = document.querySelectorAll('[data-wx]');
+        function setStatus(text, cls) {
+            if (!statusEl) return;
+            statusEl.textContent = text;
+            statusEl.className = 'wx-status ' + (cls || '');
+        }
+
+        var offices = ['210000', '230000'];
+        var results = {};
+        var failed = 0;
+
+        Promise.all(offices.map(function (o) {
+            return load(o).then(function (d) { results[o] = d; }).catch(function () { failed++; });
+        })).then(function () {
+            if (failed === offices.length) {
+                setStatus('暫時無法讀取氣象廳的資料。請用下方按鈕直接查看官方預報。', 'warn');
+                return;
+            }
+            var filled = 0, lastDate = '', report = '';
+            var parsed = {};
+            Object.keys(COLS).forEach(function (key) {
+                var d = results[COLS[key].office];
+                parsed[key] = parse(d, COLS[key]);
+                Object.keys(parsed[key]).forEach(function (date) { if (date > lastDate) lastDate = date; });
+                if (d && d[0] && d[0].reportDatetime && !report) report = d[0].reportDatetime;
+            });
+            for (var i = 0; i < cells.length; i++) {
+                var el = cells[i];
+                var info = parsed[el.dataset.col] && parsed[el.dataset.col][el.dataset.date];
+                var html = cellHtml(info);
+                el.innerHTML = html;
+                if (html !== '—') filled++;
+            }
+            var total = cells.length;
+            if (filled === 0) {
+                setStatus('氣象廳目前的預報只到 ' + (lastDate ? md(lastDate) : '近日') + '，還沒有涵蓋 11/18–22。預報出現後，打開本頁就會自動顯示。', 'wait');
+            } else if (filled < total) {
+                setStatus('氣象廳 ' + fmtReport(report) + ' 發表。部分日期還沒有預報，之後再打開本頁會自動補上。', 'wait');
+            } else {
+                setStatus('氣象廳 ' + fmtReport(report) + ' 發表的預報。', 'ok');
+            }
+        });
+    }
+
+    run();
+})();
+    </script>
 </body>
 </html>
