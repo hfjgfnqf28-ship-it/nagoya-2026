@@ -403,6 +403,42 @@
         .wx-links .nav-link::before { content: '☁️'; }
         .wx-credit { margin: 12px 0 0; }
 
+
+        /* 路線地圖 */
+        .map-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 12px; }
+        .map-tab {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 7px 16px;
+            border: 2px solid var(--maple-deep);
+            border-radius: 999px;
+            background: #fff;
+            color: var(--maple-deep);
+            font: inherit;
+            font-size: 0.9em;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .map-tab[class*=" d"]::before {
+            content: '';
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--day);
+            box-shadow: 0 0 0 2px rgba(0,0,0,0.12);
+        }
+        .map-tab[aria-pressed="true"] { background: var(--maple-deep); color: #fff; }
+        .map-tab:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+        .map-frame {
+            overflow: hidden;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: #e9e2d6;
+        }
+        .map-frame iframe { display: block; width: 100%; height: 440px; border: 0; }
+        .map-summary { margin: 10px 0 0; font-weight: 700; color: var(--maple-deep); font-size: 0.95em; }
+
         @media (max-width: 600px) {
             body { font-size: 16px; }
             .hero { min-height: 260px; padding: 40px 16px 48px; }
@@ -414,6 +450,7 @@
             .nav-link { width: 100%; justify-content: center; padding: 12px 16px; }
             .gps-text { width: 100%; font-size: 0.95em; }
             .cars { grid-template-columns: 1fr; }
+            .map-frame iframe { height: 360px; }
         }
     </style>
 </head>
@@ -437,6 +474,7 @@
 
     <nav class="daynav" aria-label="行程跳轉">
         <a href="#overview">總覽</a>
+        <a href="#map">地圖</a>
         <a href="#weather">天氣</a>
         <a class="d1" href="#day1">Day 1</a>
         <a class="d2" href="#day2">Day 2</a>
@@ -474,6 +512,27 @@
                 </tbody>
             </table>
             </div>
+        </div>
+
+        <div class="box" id="map">
+            <h2 class="section-title">路線地圖</h2>
+            <p class="muted">選擇「全程」或某一天，地圖會顯示該段路線。按下方按鈕可在 Google 地圖 app 開啟並直接導航。</p>
+            <div class="map-tabs" role="group" aria-label="選擇路線">
+                <button type="button" class="map-tab" aria-pressed="true" data-embed="https://maps.google.com/maps?saddr=%E4%B8%AD%E9%83%A8%E5%9B%BD%E9%9A%9B%E7%A9%BA%E6%B8%AF&amp;daddr=CHIBA%20PLUS%20%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E6%9D%91%E5%8C%BA%E5%90%8D%E9%A7%853-18-19+to:%E3%83%9B%E3%83%86%E3%83%AB%E3%82%A2%E3%83%A9%E3%82%A6%E3%83%B3%E3%83%89%E9%AB%98%E5%B1%B1+to:%E7%99%BD%E5%B7%9D%E9%83%B7+to:%E3%83%95%E3%82%A7%E3%82%A2%E3%83%95%E3%82%A3%E3%83%BC%E3%83%AB%E3%83%89%E3%83%BB%E3%83%90%E3%82%A4%E3%83%BB%E3%83%9E%E3%83%AA%E3%82%AA%E3%83%83%E3%83%88%E3%83%BB%E5%B2%90%E9%98%9C%E9%83%A1%E4%B8%8A+to:%E6%B9%AF%E4%B9%8B%E5%B3%B6%E9%A4%A8+to:%E9%A6%AC%E7%B1%A0%E5%AE%BF+to:%E9%A6%99%E5%B5%90%E6%B8%93+to:%E4%B8%89%E4%BA%95%E3%82%AC%E3%83%BC%E3%83%87%E3%83%B3%E3%83%9B%E3%83%86%E3%83%AB%E5%90%8D%E5%8F%A4%E5%B1%8B%E3%83%97%E3%83%AC%E3%83%9F%E3%82%A2+to:%E4%B8%AD%E9%83%A8%E5%9B%BD%E9%9A%9B%E7%A9%BA%E6%B8%AF&amp;dirflg=d&amp;hl=zh-HK&amp;output=embed" data-open="https://www.google.com/maps/dir/?api=1&amp;travelmode=driving&amp;origin=%E4%B8%AD%E9%83%A8%E5%9B%BD%E9%9A%9B%E7%A9%BA%E6%B8%AF&amp;destination=%E4%B8%AD%E9%83%A8%E5%9B%BD%E9%9A%9B%E7%A9%BA%E6%B8%AF&amp;waypoints=CHIBA%20PLUS%20%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E6%9D%91%E5%8C%BA%E5%90%8D%E9%A7%853-18-19%7C%E3%83%9B%E3%83%86%E3%83%AB%E3%82%A2%E3%83%A9%E3%82%A6%E3%83%B3%E3%83%89%E9%AB%98%E5%B1%B1%7C%E7%99%BD%E5%B7%9D%E9%83%B7%7C%E3%83%95%E3%82%A7%E3%82%A2%E3%83%95%E3%82%A3%E3%83%BC%E3%83%AB%E3%83%89%E3%83%BB%E3%83%90%E3%82%A4%E3%83%BB%E3%83%9E%E3%83%AA%E3%82%AA%E3%83%83%E3%83%88%E3%83%BB%E5%B2%90%E9%98%9C%E9%83%A1%E4%B8%8A%7C%E6%B9%AF%E4%B9%8B%E5%B3%B6%E9%A4%A8%7C%E9%A6%AC%E7%B1%A0%E5%AE%BF%7C%E9%A6%99%E5%B5%90%E6%B8%93%7C%E4%B8%89%E4%BA%95%E3%82%AC%E3%83%BC%E3%83%87%E3%83%B3%E3%83%9B%E3%83%86%E3%83%AB%E5%90%8D%E5%8F%A4%E5%B1%8B%E3%83%97%E3%83%AC%E3%83%9F%E3%82%A2" data-summary="名古屋機場 → CHIBA PLUS（名古屋站）→ 高山酒店 → 白川鄉 → 郡上酒店 → 湯之島館（下呂）→ 馬籠宿 → 香嵐溪 → 名古屋酒店 → 名古屋機場">全程</button>
+                <button type="button" class="map-tab d1" aria-pressed="false" data-embed="https://maps.google.com/maps?saddr=%E4%B8%AD%E9%83%A8%E5%9B%BD%E9%9A%9B%E7%A9%BA%E6%B8%AF&amp;daddr=CHIBA%20PLUS%20%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E6%9D%91%E5%8C%BA%E5%90%8D%E9%A7%853-18-19+to:%E3%83%9B%E3%83%86%E3%83%AB%E3%82%A2%E3%83%A9%E3%82%A6%E3%83%B3%E3%83%89%E9%AB%98%E5%B1%B1&amp;dirflg=d&amp;hl=zh-HK&amp;output=embed" data-open="https://www.google.com/maps/dir/?api=1&amp;travelmode=driving&amp;origin=%E4%B8%AD%E9%83%A8%E5%9B%BD%E9%9A%9B%E7%A9%BA%E6%B8%AF&amp;destination=%E3%83%9B%E3%83%86%E3%83%AB%E3%82%A2%E3%83%A9%E3%82%A6%E3%83%B3%E3%83%89%E9%AB%98%E5%B1%B1&amp;waypoints=CHIBA%20PLUS%20%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E6%9D%91%E5%8C%BA%E5%90%8D%E9%A7%853-18-19" data-summary="名古屋機場 → CHIBA PLUS（名古屋站）→ 高山酒店">Day 1</button>
+                <button type="button" class="map-tab d2" aria-pressed="false" data-embed="https://maps.google.com/maps?saddr=%E3%83%9B%E3%83%86%E3%83%AB%E3%82%A2%E3%83%A9%E3%82%A6%E3%83%B3%E3%83%89%E9%AB%98%E5%B1%B1&amp;daddr=%E9%AB%98%E5%B1%B1%E5%8F%A4%E3%81%84%E7%94%BA%E4%B8%A6%E3%81%BF+to:%E7%99%BD%E5%B7%9D%E9%83%B7+to:%E3%83%95%E3%82%A7%E3%82%A2%E3%83%95%E3%82%A3%E3%83%BC%E3%83%AB%E3%83%89%E3%83%BB%E3%83%90%E3%82%A4%E3%83%BB%E3%83%9E%E3%83%AA%E3%82%AA%E3%83%83%E3%83%88%E3%83%BB%E5%B2%90%E9%98%9C%E9%83%A1%E4%B8%8A&amp;dirflg=d&amp;hl=zh-HK&amp;output=embed" data-open="https://www.google.com/maps/dir/?api=1&amp;travelmode=driving&amp;origin=%E3%83%9B%E3%83%86%E3%83%AB%E3%82%A2%E3%83%A9%E3%82%A6%E3%83%B3%E3%83%89%E9%AB%98%E5%B1%B1&amp;destination=%E3%83%95%E3%82%A7%E3%82%A2%E3%83%95%E3%82%A3%E3%83%BC%E3%83%AB%E3%83%89%E3%83%BB%E3%83%90%E3%82%A4%E3%83%BB%E3%83%9E%E3%83%AA%E3%82%AA%E3%83%83%E3%83%88%E3%83%BB%E5%B2%90%E9%98%9C%E9%83%A1%E4%B8%8A&amp;waypoints=%E9%AB%98%E5%B1%B1%E5%8F%A4%E3%81%84%E7%94%BA%E4%B8%A6%E3%81%BF%7C%E7%99%BD%E5%B7%9D%E9%83%B7" data-summary="高山酒店 → 高山老街 → 白川鄉 → 郡上酒店">Day 2</button>
+                <button type="button" class="map-tab d3" aria-pressed="false" data-embed="https://maps.google.com/maps?saddr=%E3%83%95%E3%82%A7%E3%82%A2%E3%83%95%E3%82%A3%E3%83%BC%E3%83%AB%E3%83%89%E3%83%BB%E3%83%90%E3%82%A4%E3%83%BB%E3%83%9E%E3%83%AA%E3%82%AA%E3%83%83%E3%83%88%E3%83%BB%E5%B2%90%E9%98%9C%E9%83%A1%E4%B8%8A&amp;daddr=%E9%83%A1%E4%B8%8A%E5%85%AB%E5%B9%A1%E5%9F%8E+to:%E6%B9%AF%E4%B9%8B%E5%B3%B6%E9%A4%A8&amp;dirflg=d&amp;hl=zh-HK&amp;output=embed" data-open="https://www.google.com/maps/dir/?api=1&amp;travelmode=driving&amp;origin=%E3%83%95%E3%82%A7%E3%82%A2%E3%83%95%E3%82%A3%E3%83%BC%E3%83%AB%E3%83%89%E3%83%BB%E3%83%90%E3%82%A4%E3%83%BB%E3%83%9E%E3%83%AA%E3%82%AA%E3%83%83%E3%83%88%E3%83%BB%E5%B2%90%E9%98%9C%E9%83%A1%E4%B8%8A&amp;destination=%E6%B9%AF%E4%B9%8B%E5%B3%B6%E9%A4%A8&amp;waypoints=%E9%83%A1%E4%B8%8A%E5%85%AB%E5%B9%A1%E5%9F%8E" data-summary="郡上酒店 → 郡上八幡城 → 湯之島館（下呂）">Day 3</button>
+                <button type="button" class="map-tab d4" aria-pressed="false" data-embed="https://maps.google.com/maps?saddr=%E6%B9%AF%E4%B9%8B%E5%B3%B6%E9%A4%A8&amp;daddr=%E9%A6%AC%E7%B1%A0%E5%AE%BF+to:%E9%A6%99%E5%B5%90%E6%B8%93+to:%E4%B8%89%E4%BA%95%E3%82%AC%E3%83%BC%E3%83%87%E3%83%B3%E3%83%9B%E3%83%86%E3%83%AB%E5%90%8D%E5%8F%A4%E5%B1%8B%E3%83%97%E3%83%AC%E3%83%9F%E3%82%A2&amp;dirflg=d&amp;hl=zh-HK&amp;output=embed" data-open="https://www.google.com/maps/dir/?api=1&amp;travelmode=driving&amp;origin=%E6%B9%AF%E4%B9%8B%E5%B3%B6%E9%A4%A8&amp;destination=%E4%B8%89%E4%BA%95%E3%82%AC%E3%83%BC%E3%83%87%E3%83%B3%E3%83%9B%E3%83%86%E3%83%AB%E5%90%8D%E5%8F%A4%E5%B1%8B%E3%83%97%E3%83%AC%E3%83%9F%E3%82%A2&amp;waypoints=%E9%A6%AC%E7%B1%A0%E5%AE%BF%7C%E9%A6%99%E5%B5%90%E6%B8%93" data-summary="湯之島館 → 馬籠宿 → 香嵐溪 → 名古屋酒店">Day 4</button>
+                <button type="button" class="map-tab d5" aria-pressed="false" data-embed="https://maps.google.com/maps?saddr=%E4%B8%89%E4%BA%95%E3%82%AC%E3%83%BC%E3%83%87%E3%83%B3%E3%83%9B%E3%83%86%E3%83%AB%E5%90%8D%E5%8F%A4%E5%B1%8B%E3%83%97%E3%83%AC%E3%83%9F%E3%82%A2&amp;daddr=%E5%A4%A7%E9%A0%88%E5%95%86%E5%BA%97%E8%A1%97+to:%E7%86%B1%E7%94%B0%E7%A5%9E%E5%AE%AE+to:%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85+to:%E4%B8%AD%E9%83%A8%E5%9B%BD%E9%9A%9B%E7%A9%BA%E6%B8%AF&amp;dirflg=d&amp;hl=zh-HK&amp;output=embed" data-open="https://www.google.com/maps/dir/?api=1&amp;travelmode=driving&amp;origin=%E4%B8%89%E4%BA%95%E3%82%AC%E3%83%BC%E3%83%87%E3%83%B3%E3%83%9B%E3%83%86%E3%83%AB%E5%90%8D%E5%8F%A4%E5%B1%8B%E3%83%97%E3%83%AC%E3%83%9F%E3%82%A2&amp;destination=%E4%B8%AD%E9%83%A8%E5%9B%BD%E9%9A%9B%E7%A9%BA%E6%B8%AF&amp;waypoints=%E5%A4%A7%E9%A0%88%E5%95%86%E5%BA%97%E8%A1%97%7C%E7%86%B1%E7%94%B0%E7%A5%9E%E5%AE%AE%7C%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85" data-summary="名古屋酒店 → 大須商店街 → 熱田神宮 → 名古屋站 → 名古屋機場">Day 5</button>
+            </div>
+            <div class="map-frame">
+                <iframe id="route-map" title="旅程路線地圖" src="https://maps.google.com/maps?saddr=%E4%B8%AD%E9%83%A8%E5%9B%BD%E9%9A%9B%E7%A9%BA%E6%B8%AF&amp;daddr=CHIBA%20PLUS%20%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E6%9D%91%E5%8C%BA%E5%90%8D%E9%A7%853-18-19+to:%E3%83%9B%E3%83%86%E3%83%AB%E3%82%A2%E3%83%A9%E3%82%A6%E3%83%B3%E3%83%89%E9%AB%98%E5%B1%B1+to:%E7%99%BD%E5%B7%9D%E9%83%B7+to:%E3%83%95%E3%82%A7%E3%82%A2%E3%83%95%E3%82%A3%E3%83%BC%E3%83%AB%E3%83%89%E3%83%BB%E3%83%90%E3%82%A4%E3%83%BB%E3%83%9E%E3%83%AA%E3%82%AA%E3%83%83%E3%83%88%E3%83%BB%E5%B2%90%E9%98%9C%E9%83%A1%E4%B8%8A+to:%E6%B9%AF%E4%B9%8B%E5%B3%B6%E9%A4%A8+to:%E9%A6%AC%E7%B1%A0%E5%AE%BF+to:%E9%A6%99%E5%B5%90%E6%B8%93+to:%E4%B8%89%E4%BA%95%E3%82%AC%E3%83%BC%E3%83%87%E3%83%B3%E3%83%9B%E3%83%86%E3%83%AB%E5%90%8D%E5%8F%A4%E5%B1%8B%E3%83%97%E3%83%AC%E3%83%9F%E3%82%A2+to:%E4%B8%AD%E9%83%A8%E5%9B%BD%E9%9A%9B%E7%A9%BA%E6%B8%AF&amp;dirflg=d&amp;hl=zh-HK&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+            </div>
+            <p class="map-summary" id="route-summary">名古屋機場 → CHIBA PLUS（名古屋站）→ 高山酒店 → 白川鄉 → 郡上酒店 → 湯之島館（下呂）→ 馬籠宿 → 香嵐溪 → 名古屋酒店 → 名古屋機場</p>
+            <div class="btn-container">
+                <a class="nav-link" id="route-open" href="https://www.google.com/maps/dir/?api=1&amp;travelmode=driving&amp;origin=%E4%B8%AD%E9%83%A8%E5%9B%BD%E9%9A%9B%E7%A9%BA%E6%B8%AF&amp;destination=%E4%B8%AD%E9%83%A8%E5%9B%BD%E9%9A%9B%E7%A9%BA%E6%B8%AF&amp;waypoints=CHIBA%20PLUS%20%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E6%9D%91%E5%8C%BA%E5%90%8D%E9%A7%853-18-19%7C%E3%83%9B%E3%83%86%E3%83%AB%E3%82%A2%E3%83%A9%E3%82%A6%E3%83%B3%E3%83%89%E9%AB%98%E5%B1%B1%7C%E7%99%BD%E5%B7%9D%E9%83%B7%7C%E3%83%95%E3%82%A7%E3%82%A2%E3%83%95%E3%82%A3%E3%83%BC%E3%83%AB%E3%83%89%E3%83%BB%E3%83%90%E3%82%A4%E3%83%BB%E3%83%9E%E3%83%AA%E3%82%AA%E3%83%83%E3%83%88%E3%83%BB%E5%B2%90%E9%98%9C%E9%83%A1%E4%B8%8A%7C%E6%B9%AF%E4%B9%8B%E5%B3%B6%E9%A4%A8%7C%E9%A6%AC%E7%B1%A0%E5%AE%BF%7C%E9%A6%99%E5%B5%90%E6%B8%93%7C%E4%B8%89%E4%BA%95%E3%82%AC%E3%83%BC%E3%83%87%E3%83%B3%E3%83%9B%E3%83%86%E3%83%AB%E5%90%8D%E5%8F%A4%E5%B1%8B%E3%83%97%E3%83%AC%E3%83%9F%E3%82%A2" target="_blank" rel="noopener">在 Google 地圖開啟路線 <span class="jp" lang="ja">Google マップ</span></a>
+            </div>
+            <p class="muted">路線以地點名稱搜尋，酒店和景點若在地圖上顯示錯誤，請改用各日行程裡的 📍 按鈕。車程以導航和當日路況為準。</p>
         </div>
 
         <div class="box" id="weather">
@@ -937,6 +996,23 @@
 
     run();
 })();
+    </script>
+    <script>
+    (function () {
+        var tabs = document.querySelectorAll('.map-tab');
+        var frame = document.getElementById('route-map');
+        var open = document.getElementById('route-open');
+        var summary = document.getElementById('route-summary');
+        if (!frame) return;
+        for (var i = 0; i < tabs.length; i++) {
+            tabs[i].addEventListener('click', function () {
+                for (var j = 0; j < tabs.length; j++) tabs[j].setAttribute('aria-pressed', tabs[j] === this ? 'true' : 'false');
+                frame.src = this.getAttribute('data-embed');
+                open.href = this.getAttribute('data-open');
+                summary.textContent = this.getAttribute('data-summary');
+            });
+        }
+    })();
     </script>
 </body>
 </html>
